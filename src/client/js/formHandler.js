@@ -18,19 +18,14 @@ function handleSubmit(event) {
     //giati to exei url: formText kai oxi formText, dokimase ti allazei otan to trexeis, episis allakse to http .... /api giati fainetai plagiarism
     
     //it waits until it has received the data and posted the data and then update
-    .then(function(res) {
-        document.getElementById("agreement").innerHTML = "Agreement: ${res.agreement}";
-        document.getElementById("subjectivity").innerHTML = "Subjectivity: ${res.subjectivity}";
-        document.getElementById("confidence").innerHTML = "Confidence: ${res.confidence}";
-        document.getElementById("irony").innerHTML = "Irony: ${res.irony}";
-    };
-}
-
-//New code Draft
-
-
-
-
+    .then(function(result) {
+        console.log(result.agreement);
+        document.getElementById("agreement").innerHTML = "Agreement: ${result.agreement}";
+        document.getElementById("subjectivity").innerHTML = "Subjectivity: ${result.subjectivity}";
+        document.getElementById("confidence").innerHTML = "Confidence: ${result.confidence}";
+        document.getElementById("irony").innerHTML = "Irony: ${result.irony}";
+    })
+};
 
 //function declarations:
 
@@ -52,6 +47,8 @@ const postTextInfo = async (url = "", data = {}) => {
         console.log("error:", error);
     }
 };
+
+
 
 //UpdateUI function - dokimase na to grapseis san ksexwristo function px updateUI()
 

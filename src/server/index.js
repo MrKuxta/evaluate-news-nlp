@@ -33,17 +33,19 @@ app.listen(8081, function () {
     console.log('Example app listening on port 8081!')
 })
 
-//NEW CODE
+//Create a post route (user's input)
+app.post("http://localhost:8081/api",getTextInfo);
 
-//Create a post route
-app.post("/alldata",getTextInfo);
+//The key is unique so needs to be defined only once
+const textApi = process.env.API_KEY;
+const baseURL = "https://api.meaningcloud.com/sentiment-2.1?";
 
 //fetching info from the API
-const getTextInfo = async (baseURL, textApi, searchUrl) => {
+const getTextInfo = async (req, res) => {
     //Construct API
-    const textApi = process.env.API_KEY;
+    
     const searchUrl = req.body.url;
-    const baseURL = "https://api.meaningcloud.com/sentiment-2.1?";
+    
     const res = await fetch("${baseURL}key=${textApi}&url=${searchUrl}$lang=en");
     try{
         const data = await res.json();
