@@ -5,17 +5,18 @@ var path = require('path')
 const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
 
-//extra apo to copied paradeigma pou kanw
+//extra
 const bodyParser = require("body-parser");
 const fetch = require("node-fetch");
 const cors = require("cors");
-app.use(cors());
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
 //telos extra
 
 //make an instance
 const app = express()
+//middlewares created after app initialised
+app.use(cors());
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
 
 //auto den kserw giati uparxei? des ta videakia otan to edeiksa, mipws eipan tipota
 app.use(express.static('dist'))
@@ -33,8 +34,6 @@ app.listen(8081, function () {
     console.log('Example app listening on port 8081!')
 })
 
-//Create a post route (user's input)
-app.post("http://localhost:8081/api",getTextInfo);
 
 //The key is unique so needs to be defined only once
 const textApi = process.env.API_KEY;
@@ -43,18 +42,20 @@ const baseURL = "https://api.meaningcloud.com/sentiment-2.1?";
 //fetching info from the API
 const getTextInfo = async (req, res) => {
     //Construct API
-    
     const searchUrl = req.body.url;
-    
-    const res = await fetch("${baseURL}key=${textApi}&url=${searchUrl}$lang=en");
+    const response = await fetch("${baseURL}key=${textApi}&url=${searchUrl}$lang=en");
     try{
-        const data = await res.json();
+        const data = await response.json();
         console.log(data);
-        return data;
+        //return data;
+        res.send(data);
     }catch (error) {
         console.log("error:", error);
     }
 };
+
+//Create a post route (user's input)
+app.post("/api",getTextInfo);
 
 
 

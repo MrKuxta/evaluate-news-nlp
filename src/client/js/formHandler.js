@@ -1,55 +1,64 @@
-function handleSubmit(event) {
+const fetch = require('node-fetch')
+
+let resultOutput = document.getElementById("results");
+let ironyOutput = document.getElementById("irony");
+let agreementOutput = document.getElementById("agreement");
+let subjectivityOutput = document.getElementById("subjectivity");
+let confidenceOutput = document.getElementById("confidence");
+
+
+agreementOutput.innerHTML = "Agreement: results pending";
+subjectivityOutput.innerHTML = "Subjectivity: results pending";
+confidenceOutput.innerHTML = "Confidence: results pending";
+ironyOutput.innerHTML = "Irony: results pending";
+
+
+async function handleSubmit(event) {
     event.preventDefault()
 
+    //to clean the values for the next submit
+    resultOutput.innerHTML = "";
+    agreementOutput.innerHTML = "";
+    subjectivityOutput.innerHTML = "";
+    confidenceOutput.innerHTML = "";
+    ironyOutput.innerHTML = "";
+
     // check what text was put into the form field
-    let formText = document.getElementById('articleSource').value
-    //Client.checkForName(formText)
+    let formText = document.getElementById('articleSource').value;
 
-    console.log("::: Form Submitted :::")
-    //fetch('http://localhost:8081/test')
-    //.then(res => {
-    //    return res.json()
-    //})
-    //.then(function(res) {
-    //    document.getElementById('results').innerHTML = res.message
-    //})
+    // print the message to show progress
+    console.log("::: Form Submitted :::");
 
-    postTextInfo("http://localhost:8081/api", {url: formText})
-    //giati to exei url: formText kai oxi formText, dokimase ti allazei otan to trexeis, episis allakse to http .... /api giati fainetai plagiarism
-    
+    //call api
+    let apiReturn = await apiResult('http://localhost:8081/api', formText)
+
     //it waits until it has received the data and posted the data and then update
-    .then(function(result) {
-        console.log(result.agreement);
-        document.getElementById("agreement").innerHTML = "Agreement: ${result.agreement}";
-        document.getElementById("subjectivity").innerHTML = "Subjectivity: ${result.subjectivity}";
-        document.getElementById("confidence").innerHTML = "Confidence: ${result.confidence}";
-        document.getElementById("irony").innerHTML = "Irony: ${result.irony}";
+    .then(apiReturn => apiReturn.json())
+
+    //then updates the text on the client
+    .then(function(res) {
+        resultOutput.innerHTML = res.message;
+        agreementOutput.innerHTML = "Agreement: ${res.agreement}";
+        subjectivityOutput.innerHTML = "Subjectivity: ${res.subjectivity}";
+        confidenceOutput.innerHTML = "Confidence: ${res.confidence}";
+        ironyOutput.innerHTML = "Irony: ${res.irony}";
+        //document.getElementById("score_tag").innerHTML = "Score: ${result.score_tag}";
     })
-};
-
-//function declarations:
-
-//post request to the endpoint of  our server
-const postTextInfo = async (url = "", data = {}) => {
-    const response = await fetch(url, {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    });
-    try {
-        const newData = await response.json();
-        console.log(newData);
-        return newData;
-    } catch(error) {
-        console.log("error:", error);
-    }
-};
+}
 
 
+//function declaration
 
-//UpdateUI function - dokimase na to grapseis san ksexwristo function px updateUI()
+export async function apiResult(url, formText) {
+
+    let response = await fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        //or headers: {'Content-Type': "application/json"}
+        headers: {'Content-Type': 'text/plain'},        
+        body: JSON.stringify({ formText })
+    })
+    return response
+}
 
 export { handleSubmit }
