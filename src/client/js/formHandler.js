@@ -38,10 +38,10 @@ async function handleSubmit(event) {
     //then updates the text on the client
     .then(function(res) {
         resultOutput.innerHTML = res.message;
-        agreementOutput.innerHTML = "Agreement: ${res.agreement}";
-        subjectivityOutput.innerHTML = "Subjectivity: ${res.subjectivity}";
-        confidenceOutput.innerHTML = "Confidence: ${res.confidence}";
-        ironyOutput.innerHTML = "Irony: ${res.irony}";
+        agreementOutput.innerHTML = 'Agreement: ${res.agreement}';
+        subjectivityOutput.innerHTML = 'Subjectivity: ${res.subjectivity}';
+        confidenceOutput.innerHTML = 'Confidence: ${res.confidence}';
+        ironyOutput.innerHTML = 'Irony: ${res.irony}';
         //document.getElementById("score_tag").innerHTML = "Score: ${result.score_tag}";
     })
 }
@@ -55,7 +55,7 @@ export async function apiResult(url, formText) {
         method: 'POST',
         credentials: 'same-origin',
         //or headers: {'Content-Type': "application/json"}
-        headers: {'Content-Type': 'text/plain'},        
+        headers: { 'Content-Type': "application/json" },        
         body: JSON.stringify({ formText })
     })
     return response

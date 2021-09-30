@@ -42,14 +42,14 @@ const baseURL = "https://api.meaningcloud.com/sentiment-2.1?";
 //fetching info from the API
 const getTextInfo = async (req, res) => {
     //Construct API
-    const searchUrl = req.body.url;
-    const response = await fetch("${baseURL}key=${textApi}&url=${searchUrl}$lang=en");
+    const searchUrl = req.body.formText;
+    const response = await fetch('${baseURL}key=${textApi}&url=${searchUrl}$lang=en');
     try{
         const data = await response.json();
         console.log(data);
         //return data;
         res.send(data);
-    }catch (error) {
+    } catch (error) {
         console.log("error:", error);
     }
 };
