@@ -13,6 +13,9 @@ confidenceOutput.innerHTML = "Confidence: results pending";
 ironyOutput.innerHTML = "Irony: results pending";
 
 
+import checkForUrl from './urlValidation';
+
+
 async function handleSubmit(event) {
     event.preventDefault()
 
@@ -28,6 +31,16 @@ async function handleSubmit(event) {
 
     // print the message to show progress
     console.log("::: Form Submitted :::");
+
+
+    // check the validity of the url
+    let checkResult = document.getElementById('urlCheck');
+
+    if (checkForUrl(formText)) {
+        checkResult.innerHTML="Valid URL!"
+    } else {
+        checkResult.innerHTML="Please Insert a valid URL!"
+    }
 
     //call api
     let apiReturn = await apiResult('http://localhost:8081/api', formText)

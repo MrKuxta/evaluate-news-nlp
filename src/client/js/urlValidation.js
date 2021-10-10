@@ -15,3 +15,12 @@
 
 export { checkForName }
 */
+
+function checkForUrl(formText) {
+    /*look for http or https*/
+    let check = new RegExp(/^(http|https):\/\/[^ "]+$/);
+    /*using test() method to test for a match in a string*/
+    return check.test(formText);
+}
+
+export { checkForUrl }

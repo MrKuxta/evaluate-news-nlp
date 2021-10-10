@@ -5,11 +5,9 @@ var path = require('path')
 const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
 
-//extra
 const bodyParser = require("body-parser");
 const fetch = require("node-fetch");
 const cors = require("cors");
-//telos extra
 
 //make an instance
 const app = express()
@@ -18,13 +16,13 @@ app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 
-//auto den kserw giati uparxei? des ta videakia otan to edeiksa, mipws eipan tipota
+//as it was shown in the lessons. However I am not sure what this does, could you please explain?
 app.use(express.static('dist'))
 
-//ti emfanizei sto log arage? rikse mia matia
+//as it was shown in the lessons. However I am not sure what this does, could you please explain?
 console.log(__dirname)
 
-//auto den kserw giati uparxei? des ta videakia otan to edeiksa, mipws eipan tipota
+//as it was shown in the lessons. However I am not sure what this does, could you please explain?
 app.get('/', function (req, res) {
     res.sendFile(path.resolve('dist/index.html'))
 })
