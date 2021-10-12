@@ -1,7 +1,9 @@
+import { checkForUrl } from './urlValidation';
+
 const fetch = require('node-fetch')
 
 let resultOutput = document.getElementById("results");
-let ironyOutput = document.getElementById("irony");
+
 let agreementOutput = document.getElementById("agreement");
 let subjectivityOutput = document.getElementById("subjectivity");
 let confidenceOutput = document.getElementById("confidence");
@@ -10,10 +12,6 @@ let confidenceOutput = document.getElementById("confidence");
 agreementOutput.innerHTML = "Agreement: results pending";
 subjectivityOutput.innerHTML = "Subjectivity: results pending";
 confidenceOutput.innerHTML = "Confidence: results pending";
-ironyOutput.innerHTML = "Irony: results pending";
-
-
-import checkForUrl from './urlValidation';
 
 
 async function handleSubmit(event) {
@@ -24,7 +22,7 @@ async function handleSubmit(event) {
     agreementOutput.innerHTML = "";
     subjectivityOutput.innerHTML = "";
     confidenceOutput.innerHTML = "";
-    ironyOutput.innerHTML = "";
+    
 
     // check what text was put into the form field
     let formText = document.getElementById('articleSource').value;
@@ -54,8 +52,8 @@ async function handleSubmit(event) {
         agreementOutput.innerHTML = 'Agreement: ${res.agreement}';
         subjectivityOutput.innerHTML = 'Subjectivity: ${res.subjectivity}';
         confidenceOutput.innerHTML = 'Confidence: ${res.confidence}';
-        ironyOutput.innerHTML = 'Irony: ${res.irony}';
-        //document.getElementById("score_tag").innerHTML = "Score: ${result.score_tag}";
+        
+        
     })
 }
 
