@@ -41,7 +41,7 @@ const baseURL = "https://api.meaningcloud.com/sentiment-2.1?";
 const getTextInfo = async (req, res) => {
     //Construct API
     const searchUrl = req.body.formText;
-    const response = await fetch('${baseURL}key=${textApi}&url=${searchUrl}$lang=en');
+    const response = await fetch(`${baseURL}key=${textApi}&url=${searchUrl}&lang=en`);
     try{
         const data = await response.json();
         console.log(data);

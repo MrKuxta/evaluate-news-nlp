@@ -13,7 +13,7 @@ async function handleSubmit(event) {
     let confidenceOutput = document.getElementById("confidence");
 
     //to clean the values for the next submit
-    resultOutput.innerHTML = "";
+    //resultOutput.innerHTML = "";
     agreementOutput.innerHTML = "";
     subjectivityOutput.innerHTML = "";
     confidenceOutput.innerHTML = "";
@@ -41,7 +41,7 @@ async function handleSubmit(event) {
 
         //then updates the text on the client
         .then(function(res) {
-            resultOutput.innerHTML = res.message;
+            //resultOutput.innerHTML = res.message;
             agreementOutput.innerHTML = `Agreement: ${res.agreement}`;
             subjectivityOutput.innerHTML = `Subjectivity: ${res.subjectivity}`;
             confidenceOutput.innerHTML = `Confidence: ${res.confidence}`;
