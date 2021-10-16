@@ -2,20 +2,15 @@ import { checkForUrl } from './urlValidation';
 
 const fetch = require('node-fetch')
 
-let resultOutput = document.getElementById("results");
-
-let agreementOutput = document.getElementById("agreement");
-let subjectivityOutput = document.getElementById("subjectivity");
-let confidenceOutput = document.getElementById("confidence");
-
-
-agreementOutput.innerHTML = "Agreement: results pending";
-subjectivityOutput.innerHTML = "Subjectivity: results pending";
-confidenceOutput.innerHTML = "Confidence: results pending";
-
 
 async function handleSubmit(event) {
     event.preventDefault()
+    
+    let resultOutput = document.getElementById("results");
+
+    let agreementOutput = document.getElementById("agreement");
+    let subjectivityOutput = document.getElementById("subjectivity");
+    let confidenceOutput = document.getElementById("confidence");
 
     //to clean the values for the next submit
     resultOutput.innerHTML = "";
@@ -36,25 +31,26 @@ async function handleSubmit(event) {
 
     if (checkForUrl(formText)) {
         checkResult.innerHTML="Valid URL!"
+    
+
+        //call api
+        let apiReturn = await apiResult('http://localhost:8081/api', formText)
+
+        //it waits until it has received the data and posted the data and then update
+        .then(apiReturn => apiReturn.json())
+
+        //then updates the text on the client
+        .then(function(res) {
+            resultOutput.innerHTML = res.message;
+            agreementOutput.innerHTML = `Agreement: ${res.agreement}`;
+            subjectivityOutput.innerHTML = `Subjectivity: ${res.subjectivity}`;
+            confidenceOutput.innerHTML = `Confidence: ${res.confidence}`;
+        
+        })
+
     } else {
         checkResult.innerHTML="Please Insert a valid URL!"
     }
-
-    //call api
-    let apiReturn = await apiResult('http://localhost:8081/api', formText)
-
-    //it waits until it has received the data and posted the data and then update
-    .then(apiReturn => apiReturn.json())
-
-    //then updates the text on the client
-    .then(function(res) {
-        resultOutput.innerHTML = res.message;
-        agreementOutput.innerHTML = 'Agreement: ${res.agreement}';
-        subjectivityOutput.innerHTML = 'Subjectivity: ${res.subjectivity}';
-        confidenceOutput.innerHTML = 'Confidence: ${res.confidence}';
-        
-        
-    })
 }
 
 
